@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Registered Users</h2>
+    <form method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-6">
+                <input type="text" name="search" class="form-control" placeholder="Search User by Name" value="{{ request.args.get('search','') }}">
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+    {% if users %}
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-warning text-center">
+        <h4>No Matching Users Found</h4>
+        <p>
+            Try changing your search.
+        </p>
+        <a href="/view_users" class="btn btn-secondary">Show All Users</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

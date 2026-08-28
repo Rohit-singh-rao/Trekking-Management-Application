@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ trek.trek_name }}</h2>
+    <p>
+        {{ trek.description }}
+    </p>
+    <hr>
+    <h3>Available Departures</h3>
+    {% if departures %}
+        <div class="row">
+            {% for departure in departures %}
+            <div class="col-4 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body">
+                        <p>
+                            <strong>Start Date:</strong><br>
+                            {{ departure.start_date }}
+                        </p>
+                        <p>
+                            <strong>End Date:</strong><br>
+                            {{ departure.end_date }}
+                        </p>
+                        <p>
+                            <strong>Guide:</strong><br>
+                            {% if departure.staff %}
+                                {{ departure.staff.name }}
+                            {% else %}
+                                Not Assigned
+                            {% endif %}
+                        </p>
+                        <p>
+                            <strong>Seats Left:</strong><br>
+                            {{ departure.available_slots }}
+                        </p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="/book_trek/{{ departure.id }}" class="btn btn-success"> Book Trek</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            No departures are available for this trek.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

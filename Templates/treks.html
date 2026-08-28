@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    {% if request.args.get('delete_error') %}
+    <div class="alert alert-danger text-center">
+        <h5 class="mb-1">Cannot Delete Trek</h5>
+        <p class="mb-0">
+            {{ request.args.get('delete_error') }}
+        </p>
+    </div>
+    {% endif %}
+    <h2>Available Treks</h2>
+    <form method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-3">
+                <input type="text" name="search" class="form-control" placeholder="Search Trek Name" value="{{ request.args.get('search','') }}">
+            </div>
+            <div class="col-3">
+                <select name="difficulty" class="form-select">
+                    <option value="" {% if not request.args.get('difficulty') %}selected{% endif %}>
+                        All Difficulties
+                    </option>
+                    <option value="Easy" {% if request.args.get('difficulty')=="Easy" %}selected{% endif %}>
+                        Easy
+                    </option>
+                    <option value="Moderate" {% if request.args.get('difficulty')=="Moderate" %}selected{% endif %}>
+                        Moderate
+                    </option>
+                    <option value="Hard" {% if request.args.get('difficulty')=="Hard" %}selected{% endif %}>
+                        Hard
+                    </option>
+                </select>
+            </div>
+            <div class="col-3">
+                <input type="text" name="location" class="form-control" placeholder="Location" value="{{ request.args.get('location','') }}">
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary w-100">
+                    Search / Filter
+                </button>
+            </div>
+        </div>
+    </form>
+    {% if treks %}
+    <div class="row">
+        {% for trek in treks %}
+        <div class="col-6 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {{ trek.trek_name }}
+                    </h4>
+                    <hr>
+                    <p>
+                        <strong>Location:</strong>
+                        {{ trek.location }}
+                    </p>
+                    <p>
+                        <strong>Difficulty:</strong>
+                        {{ trek.difficulty }}
+                    </p>
+                    <p>
+                        <strong>Duration:</strong>
+                        {{ trek.duration }} Days
+                    </p>
+                    <p>
+                        <strong>Price:</strong>
+                        ₹{{ trek.price }}
+                    </p>
+                    <p>
+                        {{ trek.description }}
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/edit_trek/{{ trek.id }}" class="btn btn-warning btn-sm me-2">Edit</a>
+                    <a href="/manage_departures/{{ trek.id }}" class="btn btn-primary btn-sm me-2">Manage Departures</a>
+                    <a href="/delete_trek/{{ trek.id }}" class="btn btn-danger btn-sm">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        <h4>No Matching Treks Found</h4>
+        <p>
+            Try changing your search or filters.
+        </p>
+        <a href="/treks" class="btn btn-secondary">Show All Treks</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

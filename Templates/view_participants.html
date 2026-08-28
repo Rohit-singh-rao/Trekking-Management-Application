@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Participants</h2>
+<h3>{{ schedule.trek.trek_name }}</h3>
+<p>
+Departure:
+{{ schedule.start_date }} -
+{{ schedule.end_date }}
+</p>
+<hr>
+{% if bookings %}
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>People</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+    {% for booking in bookings %}
+        <tbody>
+            <tr>
+                <td>{{ booking.user.name }}</td>
+                <td>{{ booking.user.email }}</td>
+                <td>{{ booking.number_of_people }}</td>
+                <td>{{ booking.status }}</td>
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No participants yet.</p>
+{% endif %}
+{% endblock %}

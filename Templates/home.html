@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center mb-5">
+        <h1 class="display-4">🏔 Trekking Management System</h1>
+        <p class="lead">
+            Discover breathtaking trekking destinations, choose your preferred departure,
+            and begin your next adventure.
+        </p>
+        {% if user %}
+            <div class="alert alert-success">
+                Welcome back,<strong>{{ user.name }}</strong> 👋
+            </div>
+        {% endif %}
+    </div>
+    <h2 class="mb-4">Available Treks</h2>
+    <div class="row">
+        {% for trek in treks %}
+        <div class="col-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <h4 class="card-title">{{ trek.trek_name }}</h4>
+                    <hr>
+                    <p>
+                        📍 <strong>Location:</strong>
+                        {{ trek.location }}
+                    </p>
+                    <p>
+                        ⭐ <strong>Difficulty:</strong>
+                        {{ trek.difficulty }}
+                    </p>
+                    <p>
+                        🕒 <strong>Duration:</strong>
+                        {{ trek.duration }} Days
+                    </p>
+                    <p>
+                        💰 <strong>Price:</strong>
+                        ₹{{ trek.price }}
+                    </p>
+                    <p>
+                        {{ trek.description }}
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/view_departures/{{ trek.id }}" class="btn btn-primary"> View Departures</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

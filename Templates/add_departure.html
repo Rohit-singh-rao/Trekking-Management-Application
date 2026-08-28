@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Add Departure</h2>
+                    <h4 class="mb-3">{{ trek.trek_name }}</h4>
+                    <hr>
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <p>
+                                <strong>Location:</strong>
+                                {{ trek.location }}
+                            </p>
+                        </div>
+                        <div class="col-3">
+                            <p>
+                                <strong>Duration:</strong>
+                                {{ trek.duration }} Days
+                            </p>
+                        </div>
+                        <div class="col-3">
+                            <p>
+                                <strong>Price:</strong>
+                                ₹{{ trek.price }}
+                            </p>
+                        </div>
+                    </div>
+                    {% if step == 1 %}
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" name="start_date" class="form-control" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label"> Available Slots </label>
+                            <input type="number" name="available_slots" min="1" class="form-control" required >
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" name="action" value="continue" class="btn btn-primary" >
+                                Continue
+                            </button>
+                        </div>
+                    </form>
+                    {% endif %}
+                    {% if step == 2 %}
+                    <form method="POST">
+                        <div class="mb-3">
+                            <p>
+                                <strong>Start Date:</strong>
+                                {{ start_date }}
+                            </p>
+                            <p>
+                                <strong>End Date:</strong>
+                                {{ end_date }}
+                            </p>
+                            <p>
+                                <strong>Available Slots:</strong>
+                                {{ available_slots }}
+                            </p>
+                        </div>
+                        <input type="hidden" name="start_date" value="{{ start_date }}">
+                        <input type="hidden" name="end_date" value="{{ end_date }}">
+                        <input type="hidden" name="available_slots" value="{{ available_slots }}">
+                        <div class="mb-4">
+                            <label class="form-label">Assign Staff</label>
+                            <select name="staff_id" class="form-select" required >
+                                <option value="">
+                                    Select Staff
+                                </option>
+                                {% for staff in available_staff %}
+                                <option value="{{ staff.id }}">
+                                    {{ staff.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" name="action" value="create" class="btn btn-success" >
+                                Create Departure
+                            </button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>👨‍💼 Staff Management</h2>
+            <p class="text-muted mb-0">
+                Manage approvals and blacklist status of trekking staff.
+            </p>
+        </div>
+        <a href="/add_staff" class="btn btn-primary">+ Add Staff</a>
+    </div>
+    <form method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-6">
+                <input type="text" name="search" class="form-control" placeholder="Search Staff by Name" value="{{ request.args.get('search','') }}">
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+    {% if staff_members %}
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Approval</th>
+                <th class="text-center">Blacklist</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for staff in staff_members %}
+            <tr>
+                <td>{{ staff.name }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.phone }}</td>
+                <td class="text-center">
+                    {% if staff.blacklisted %}
+                        <span class="badge bg-danger">Blacklisted</span>
+                    {% elif staff.approved %}
+                        <span class="badge bg-success">Approved</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if staff.blacklisted %}
+                        <button class="btn btn-success btn-sm" disabled>
+                            Approve
+                        </button>
+                    {% elif staff.approved %}
+                        <a href="/unapprove_staff/{{ staff.id }}" class="btn btn-warning btn-sm">Unapprove</a>
+                    {% else %}
+                        <a href="/approve_staff/{{ staff.id }}"class="btn btn-success btn-sm">Approve</a>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if staff.blacklisted %}
+                        <a href="/remove_blacklist/{{ staff.id }}"class="btn btn-secondary btn-sm">Remove Blacklist</a>
+                    {% else %}
+                        <a href="/blacklist_staff/{{ staff.id }}"class="btn btn-danger btn-sm">Blacklist</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-warning text-center">
+        <h4>No Matching Staff Found</h4>
+        <p>
+            Try changing your search.
+        </p>
+        <a href="/staff" class="btn btn-secondary">Show All Staff</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

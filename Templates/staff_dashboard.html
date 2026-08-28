@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-3">Staff Dashboard</h1>
+    <p class="text-center text-muted mb-5">
+        Welcome,
+        <strong>{{ staff.name }}</strong>
+    </p>
+    <hr>
+    <h2 class="text-center mb-4">Your Assigned Departures</h2>
+    {% if departures %}
+    <div class="row">
+        {% for departure in departures %}
+        <div class="col-6 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+                    <h4 class="card-title">{{ departure.trek.trek_name }}</h4>
+                    <hr>
+                    <p>
+                        <strong>Location:</strong>
+                        {{ departure.trek.location }}
+                    </p>
+                    <p>
+                        <strong>Start Date:</strong>
+                        {{ departure.start_date }}
+                    </p>
+                    <p>
+                        <strong>End Date:</strong>
+                        {{ departure.end_date }}
+                    </p>
+                    <p>
+                        <strong>Seats Left:</strong>
+                        {{ departure.available_slots }}
+                    </p>
+                    <p>
+                        <strong>Status:</strong>
+                        {{ departure.status }}
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="/view_participants/{{ departure.id }}" class="btn btn-primary btn-sm me-2">View Participants</a>
+                    {% if departure.status == "Open" %}
+                        <a href="/close_departure/{{ departure.id }}" class="btn btn-danger btn-sm">Close Departure</a>
+                    {% else %}
+                        <a href="/open_departure/{{ departure.id }}" class="btn btn-success btn-sm">Reopen Departure</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center"> No departures assigned.</div>
+    {% endif %}
+</div>
+{% endblock %}

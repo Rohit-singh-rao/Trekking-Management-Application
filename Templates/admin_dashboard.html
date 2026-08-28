@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-center mb-4">Admin Dashboard</h1>
+<p class="text-center text-muted">Welcome, <strong>Admin</strong></p>
+<hr>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">System Statistics</h2>
+    <div class="row g-4">
+        <div class="col-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Treks</h5>
+                    <h2>{{ total_treks }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Users</h5>
+                    <h2>{{ total_users }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Staff</h5>
+                    <h2>{{ total_staff }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Bookings</h5>
+                    <h2>{{ total_bookings }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h3 class="mb-4">Trek Management</h3>
+                    <a href="/add_trek" class="btn btn-success mb-3 w-100"> Add Trek</a>
+                    <a href="/treks" class="btn btn-primary w-100">Manage Treks</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h3 class="mb-4"> Staff Management</h3>
+                    <a href="/add_staff" class="btn btn-success mb-3 w-100"> Add Staff</a>
+                    <a href="/staff" class="btn btn-primary w-100">Manage Staff</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h3 class="mb-4"> User Management</h3>
+                    <a href="/view_users" class="btn btn-primary w-100">View Registered Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

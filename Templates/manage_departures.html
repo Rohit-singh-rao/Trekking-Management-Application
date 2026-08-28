@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Manage Departures</h2>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h3 class="card-title">{{ trek.trek_name }}</h3>
+            <hr>
+            <div class="row">
+                <div class="col-6">
+                    <p>
+                        <strong>Location:</strong>
+                        {{ trek.location }}
+                    </p>
+                    <p>
+                        <strong>Difficulty:</strong>
+                        {{ trek.difficulty }}
+                    </p>
+                </div>
+                <div class="col-6">
+                    <p>
+                        <strong>Duration:</strong>
+                        {{ trek.duration }} Days
+                    </p>
+                    <p>
+                        <strong>Price:</strong>
+                        ₹{{ trek.price }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Scheduled Departures</h3>
+        <a href="/add_departure/{{ trek.id }}" class="btn btn-success">+ Add Departure</a>
+    </div>
+    {% if departures %}
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Staff</th>
+                        <th>Available Slots</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for departure in departures %}
+                    <tr>
+                        <td>{{ departure.start_date }}</td>
+                        <td>{{ departure.end_date }}</td>
+                        <td>
+                            {% if departure.staff %}
+                                {{ departure.staff.name }}
+                            {% else %}
+                                Not Assigned
+                            {% endif %}
+                        </td>
+                        <td>{{ departure.available_slots }}</td>
+                        <td>{{ departure.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-warning">
+        No departures have been created for this trek yet.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

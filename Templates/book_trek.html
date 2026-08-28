@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Book Trek</h2>
+                    <h4>{{ trek.trek_name }}</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <p>
+                                <strong>Location:</strong>
+                                {{ trek.location }}
+                            </p>
+                            <p>
+                                <strong>Departure:</strong>
+                                {{ schedule.start_date }}
+                            </p>
+                            <p>
+                                <strong>End Date:</strong>
+                                {{ schedule.end_date }}
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <p>
+                                <strong>Guide:</strong>
+                                {% if schedule.staff %}
+                                    {{ schedule.staff.name }}
+                                {% else %}
+                                    Not Assigned
+                                {% endif %}
+                            </p>
+                            <p>
+                                <strong>Price / Person:</strong>
+                                ₹{{ trek.price }}
+                            </p>
+                            <p>
+                                <strong>Seats Left:</strong>
+                                {{ schedule.available_slots }}
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <form method="POST">
+                        <div class="mb-4">
+                            <label class="form-label">Number of People</label>
+                            <input type="number" name="number_of_people" min="1" max="{{ schedule.available_slots }}" class="form-control" required>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                Confirm Booking
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

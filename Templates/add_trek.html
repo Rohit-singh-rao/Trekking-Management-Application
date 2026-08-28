@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Add New Trek</h2>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Trek Name</label>
+                            <input type="text" name="trek_name" class="form-control" required >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Location</label>
+                            <input type="text" name="location" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Difficulty</label>
+                            <input type="text" name="difficulty" class="form-control" required >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Duration (Days)</label>
+                            <input type="number" name="duration" class="form-control" required >
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price</label>
+                            <input type="number" name="price" class="form-control" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" rows="4" class="form-control"></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success">
+                                Add Trek
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
